@@ -1,0 +1,105 @@
+import openai
+
+class AdaptiveWorkspaceAssistant:
+    def __init__(self):
+        self.employee_profiles = {}
+        self.team_profiles = {}
+        self.productivity_tools = ["Slack", "Zoom", "Google Workspace", "Trello", "Asana"]
+        self.work_styles = ["Focused", "Collaborative", "Independent"]
+        self.preferences = ["Morning person", "Night owl", "Regular breaks"]
+        self.wellbeing_needs = ["Stress management", "Physical activity", "Work-life balance"]
+
+        # Initialize OpenAI API key
+        openai.api_key = 'sk-proj-xB7jRehF6kak0AFSKflnT3BlbkFJQI1gcQkcc4AiZgq8YgtW'
+
+    def create_employee_profile(self, employee_id, work_style, preferences, wellbeing_needs):
+        profile = {
+            "work_style": work_style,
+            "preferences": preferences,
+            "wellbeing_needs": wellbeing_needs
+        }
+        self.employee_profiles[employee_id] = profile
+
+    def personalize_remote_work_experience(self, employee_id):
+        if employee_id in self.employee_profiles:
+            profile = self.employee_profiles[employee_id]
+            print(f"Personalizing remote work experience for employee {employee_id}:")
+            print(f"Work style: {profile['work_style']}")
+            print("Preferences:")
+            for preference in profile['preferences']:
+                print(f"- {preference}")
+            print("Wellbeing needs:")
+            for need in profile['wellbeing_needs']:
+                print(f"- {need}")
+        else:
+            print(f"Employee {employee_id} not found.")
+
+    def integrate_with_productivity_tools(self):
+        print("Integrating with existing productivity tools:")
+        for tool in self.productivity_tools:
+            print(f"- {tool}")
+
+    def understand_work_styles(self):
+        print("Understanding work styles using machine learning...")
+
+    def understand_preferences(self):
+        print("Understanding preferences using machine learning...")
+
+    def understand_wellbeing_needs(self):
+        print("Understanding wellbeing needs using machine learning...")
+
+    def chat_with_gpt(self, prompt):
+        try:
+            response = openai.Completion.create(
+                engine="davinci",
+                prompt=prompt,
+                max_tokens=100
+            )
+            return response.choices[0].text.strip()
+        except Exception as e:
+            print("Error:", e)
+            return "Sorry, I couldn't understand that."
+
+# Create instance of AdaptiveWorkspaceAssistant
+assistant = AdaptiveWorkspaceAssistant()
+
+# Interactive part
+while True:
+    print("\nWelcome to the Adaptive Workspace Assistant!")
+    print("1. Add Employee Profile")
+    print("2. Personalize Remote Work Experience")
+    print("3. Integrate with Productivity Tools")
+    print("4. Chat with ChatGPT")
+    print("5. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        employee_id = input("Enter employee ID: ")
+        work_style = input("Enter work style (Focused/Collaborative/Independent): ")
+        preferences = input("Enter preferences separated by commas: ").split(",")
+        wellbeing_needs = input("Enter wellbeing needs separated by commas: ").split(",")
+        assistant.create_employee_profile(employee_id, work_style, preferences, wellbeing_needs)
+        print("Employee profile created successfully!")
+
+    elif choice == "2":
+        employee_id = input("Enter employee ID: ")
+        assistant.personalize_remote_work_experience(employee_id)
+
+    elif choice == "3":
+        assistant.integrate_with_productivity_tools()
+
+    elif choice == "4":
+        prompt = input("You: ")
+        response = assistant.chat_with_gpt(prompt)
+        print("ChatGPT:", response)
+
+    elif choice == "5":
+        print("Exiting...")
+        break
+
+    else:
+        print("Invalid choice. Please try again.")
+
+
+
